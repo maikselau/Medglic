@@ -83,7 +83,7 @@ picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(
 
 
 if pagina == "Médias Diárias":
-    st.title('Dashboard de Monitoramento da Glicemia - Médias Diárias')
+    st.title('Dashboard de Monitoramento da Glicemia - Paciente: Maik Selau Dimer')
     # Exibir a estimativa de A1c
     st.subheader('Estimativa da Hemoglobina Glicada (A1c)')
     st.write(f'A estimativa de A1c é de {a1c_estimado:.2f}%.')
