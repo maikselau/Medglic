@@ -76,8 +76,8 @@ if pagina == "Médias Diárias":
     media_glargina = media_diaria_glargina['Dose Glargina'].mean()
     media_asparte = media_diaria_asparte['Dose Asparte'].mean()
     desvio_padrao_asparte = dados_filtrados['Dose Asparte'].std()
-    dentro_alvo = dados_filtrados[(dados_filtrados['Glicose'] >= 90) & (dados_filtrados['Glicose'] <= 140)]
-    abaixo_alvo = dados_filtrados[dados_filtrados['Glicose'] < 90]
+    dentro_alvo = dados_filtrados[(dados_filtrados['Glicose'] >= 70) & (dados_filtrados['Glicose'] <= 140)]
+    abaixo_alvo = dados_filtrados[dados_filtrados['Glicose'] < 70]
     acima_alvo = dados_filtrados[dados_filtrados['Glicose'] > 140]
     porcentagem_dentro_alvo = (len(dentro_alvo) / len(dados_filtrados)) * 100
     porcentagem_abaixo_alvo = (len(abaixo_alvo) / len(dados_filtrados)) * 100
@@ -129,8 +129,8 @@ if pagina == "Médias Diárias":
     # Exibição das métricas no dashboard
     st.subheader('Controle Glicêmico')
     col1, col2, col3 = st.columns(3)
-    col1.metric("% Dentro do Alvo (90-140 mg/dL)", f"{porcentagem_dentro_alvo:.2f}%")
-    col2.metric("% Abaixo do Alvo (<90 mg/dL)", f"{porcentagem_abaixo_alvo:.2f}%")
+    col1.metric("% Dentro do Alvo (70-140 mg/dL)", f"{porcentagem_dentro_alvo:.2f}%")
+    col2.metric("% Abaixo do Alvo (<70 mg/dL)", f"{porcentagem_abaixo_alvo:.2f}%")
     col3.metric("% Acima do Alvo (>140 mg/dL)", f"{porcentagem_acima_alvo:.2f}%")
    
 
