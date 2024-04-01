@@ -53,7 +53,7 @@ horario_inicio, horario_fim = st.sidebar.slider(
 )
 
 
-st.sidebar.subheader('Versão 1.1 - Em desenvolvimento.')
+st.sidebar.subheader('Versão 1.0 - Em desenvolvimento.')
 
 
 
