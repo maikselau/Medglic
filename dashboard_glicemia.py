@@ -152,7 +152,7 @@ if pagina == "Médias Diárias":
             'Saturday': 'Sábado',
             'Sunday': 'Domingo',
         }
-    return dias.get(english_day_name, 'Dia inválido')
+        return dias.get(english_day_name, 'Dia inválido')
 
     # Aplicando a função de tradução
     dados_filtrados['Dia da Semana'] = dados_filtrados['Data'].dt.day_name().apply(traduzir_dia_semana)
