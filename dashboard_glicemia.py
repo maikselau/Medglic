@@ -76,8 +76,8 @@ if pagina == "Médias Diárias":
     media_glargina = media_diaria_glargina['Dose Glargina'].mean()
     media_asparte = media_diaria_asparte['Dose Asparte'].mean()
     desvio_padrao_asparte = dados_filtrados['Dose Asparte'].std()
-    dentro_alvo = dados_filtrados[(dados_filtrados['Glicose'] >= 90) & (dados_filtrados['Glicose'] <= 140)]
-    abaixo_alvo = dados_filtrados[dados_filtrados['Glicose'] < 90]
+    dentro_alvo = dados_filtrados[(dados_filtrados['Glicose'] >= 70) & (dados_filtrados['Glicose'] <= 140)]
+    abaixo_alvo = dados_filtrados[dados_filtrados['Glicose'] < 70]
     acima_alvo = dados_filtrados[dados_filtrados['Glicose'] > 140]
     porcentagem_dentro_alvo = (len(dentro_alvo) / len(dados_filtrados)) * 100
     porcentagem_abaixo_alvo = (len(abaixo_alvo) / len(dados_filtrados)) * 100
