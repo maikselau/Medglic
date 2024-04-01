@@ -72,9 +72,11 @@ if pagina == "Médias Diárias":
     a1c_estimado = (media_glicose_total + 46.7) / 28.7
     picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(5)
     media_diaria_glargina = dados_filtrados.groupby('Data')['Dose Glargina'].mean().reset_index()
+    soma_diaria_asparte = dados_filtrados.groupby('Data')['Dose Asparte'].sum().reset_index()
     media_diaria_asparte = dados_filtrados.groupby('Data')['Dose Asparte'].mean().reset_index()
     media_glargina = media_diaria_glargina['Dose Glargina'].mean()
     media_asparte = media_diaria_asparte['Dose Asparte'].mean()
+    media_total_diaria_asparte = soma_diaria_asparte['Dose Asparte'].mean()
     desvio_padrao_asparte = dados_filtrados['Dose Asparte'].std()
     dentro_alvo = dados_filtrados[(dados_filtrados['Glicose'] >= 70) & (dados_filtrados['Glicose'] <= 140)]
     abaixo_alvo = dados_filtrados[dados_filtrados['Glicose'] < 70]
@@ -111,10 +113,11 @@ if pagina == "Médias Diárias":
     # Renderizando o gráfico com Streamlit
     st.plotly_chart(fig, use_container_width=True)
     st.subheader('Métricas de Insulina e Controle Glicêmico')
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     col1.metric("Média Diária Glargina", f"{media_glargina:.2f} unidades")
-    col2.metric("Média Diária Asparte", f"{media_asparte:.2f} unidades")
-    col3.metric("Desvio Padrão Asparte", f"{desvio_padrao_asparte:.2f} unidades")
+    col2.metric("Média por aplicação Asparte", f"{media_asparte:.2f} unidades")
+    col3.metric("Média Total Diária de Asparte", f"{media_total_diaria_asparte:.2f} unidades")
+    col4.metric("Desvio Padrão Asparte", f"{desvio_padrao_asparte:.2f} unidades")
 
     # Adicionando uma explicação sobre o desvio padrão
     st.caption("O desvio padrão das doses de insulina Asparte indica a variação das doses administradas dia após dia. Um valor de desvio padrão menor sugere que as doses são mais consistentes, enquanto um valor maior indica uma maior variação nas doses diárias.")
