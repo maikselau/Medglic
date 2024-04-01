@@ -129,8 +129,8 @@ if pagina == "Médias Diárias":
     # Exibição das métricas no dashboard
     st.subheader('Controle Glicêmico')
     col1, col2, col3 = st.columns(3)
-    col1.metric("% Dentro do Alvo (90-140 mg/dL)", f"{porcentagem_dentro_alvo:.2f}%")
-    col2.metric("% Abaixo do Alvo (<90 mg/dL)", f"{porcentagem_abaixo_alvo:.2f}%")
+    col1.metric("% Dentro do Alvo (70-140 mg/dL)", f"{porcentagem_dentro_alvo:.2f}%")
+    col2.metric("% Abaixo do Alvo (<70 mg/dL)", f"{porcentagem_abaixo_alvo:.2f}%")
     col3.metric("% Acima do Alvo (>140 mg/dL)", f"{porcentagem_acima_alvo:.2f}%")
    
 
