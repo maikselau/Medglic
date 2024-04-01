@@ -12,7 +12,7 @@ import datetime
 caminho_arquivo = 'REGISTRO-GLICOSES.xlsx'
 
 # Lendo os dados da planilha
-dados_glicemia = pd.read_excel(caminho_arquivo)
+dados_glicemia = pd.read_excel('REGISTRO-GLICOSES.xlsx')
 
 # Converter a coluna 'Dia/Mês/Ano' para o formato datetime, se necessário
 dados_glicemia['Data'] = pd.to_datetime(dados_glicemia['Dia/Mês/Ano'], format='%d/%m/%Y')
