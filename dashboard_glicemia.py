@@ -9,7 +9,7 @@ import datetime
 #locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
 
 # Caminho para o arquivo Excel dentro da pasta 'app-medglic'
-caminho_arquivo = "C:/Users/maik/OneDrive - TECPRINTERS TECNOLOGIA DE IMPRESSAO LTDA/APP - MedGlic/REGISTRO-GLICOSES.xlsx"
+caminho_arquivo = 'REGISTRO-GLICOSES.xlsx'
 
 # Lendo os dados da planilha
 dados_glicemia = pd.read_excel(caminho_arquivo)
