@@ -120,7 +120,7 @@ if pagina == "Médias Diárias":
     st.caption("O desvio padrão das doses de insulina Asparte indica a variação das doses administradas dia após dia. Um valor de desvio padrão menor sugere que as doses são mais consistentes, enquanto um valor maior indica uma maior variação nas doses diárias.")
 
     # Cálculo das porcentagens de medições fora do alvo
-    abaixo_alvo = dados_glicemia[dados_glicemia['Glicose'] < 90]
+    abaixo_alvo = dados_glicemia[dados_glicemia['Glicose'] < 70]
     acima_alvo = dados_glicemia[dados_glicemia['Glicose'] > 140]
 
     porcentagem_abaixo_alvo = (len(abaixo_alvo) / len(dados_glicemia)) * 100
