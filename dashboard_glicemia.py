@@ -52,6 +52,11 @@ horario_inicio, horario_fim = st.sidebar.slider(
     format="HH:mm"
 )
 
+
+st.sidebar.subheader('Versão 1.1 - Em desenvolvimento.')
+
+
+
 # Aplicando o filtro de horários no DataFrame filtrado
 # Esta é a parte onde o filtro é aplicado corretamente
 dados_filtrados = dados_filtrados[
