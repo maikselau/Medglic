@@ -142,8 +142,21 @@ if pagina == "Médias Diárias":
     correlacao_asparte = dados_filtrados['Glicose'].corr(dados_filtrados['Dose Asparte'])
     st.write(f"Correlação entre Glicose e Dose Asparte: {correlacao_asparte:.2f}")
 
-    # Influência dos Dias da Semana
-    dados_filtrados['Dia da Semana'] = dados_filtrados['Data'].dt.day_name(locale='Portuguese')
+    def traduzir_dia_semana(english_day_name):
+        dias = {
+            'Monday': 'Segunda-feira',
+            'Tuesday': 'Terça-feira',
+            'Wednesday': 'Quarta-feira',
+            'Thursday': 'Quinta-feira',
+            'Friday': 'Sexta-feira',
+            'Saturday': 'Sábado',
+            'Sunday': 'Domingo',
+        }
+    return dias.get(english_day_name, 'Dia inválido')
+
+    # Aplicando a função de tradução
+    dados_filtrados['Dia da Semana'] = dados_filtrados['Data'].dt.day_name().apply(traduzir_dia_semana)
+
     fig_dias_semana = px.box(dados_filtrados, x='Dia da Semana', y='Glicose', title='Níveis de Glicose por Dia da Semana')
     st.plotly_chart(fig_dias_semana, use_container_width=True)
     with st.expander("Entenda a distribuição por dia da semana"):
