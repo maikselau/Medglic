@@ -6,7 +6,7 @@ import plotly.express as px
 import datetime
 
 # Definindo a localização para português do Brasil
-locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+#locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
 
 # Caminho para o arquivo Excel dentro da pasta 'app-medglic'
 caminho_arquivo = "C:/Users/maik/OneDrive - TECPRINTERS TECNOLOGIA DE IMPRESSAO LTDA/APP - MedGlic/REGISTRO-GLICOSES.xlsx"
