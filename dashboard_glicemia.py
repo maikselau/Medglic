@@ -90,6 +90,37 @@ if pagina == "Médias Diárias":
     st.write(f'A estimativa de média é de {media_glicose_total:.2f} mg/dL.')
     # Exibir o gráfico de linhas das médias diárias de glicose
     st.subheader('Médias Diárias de Glicose')
+    # Dicionário para traduzir os dias da semana
+    traducao_dias = {
+        'Monday': 'Seg',
+        'Tuesday': 'Ter',
+        'Wednesday': 'Qua',
+        'Thursday': 'Qui',
+        'Friday': 'Sex',
+        'Saturday': 'Sáb',
+        'Sunday': 'Dom',
+    }
+    
+    # Função para traduzir o dia da semana
+    def traduzir_dia_semana(data):
+        # Obter o nome do dia da semana em inglês
+        dia_semana_ingles = data.strftime('%A')
+        # Traduzir para português usando o dicionário
+        return traducao_dias[dia_semana_ingles]
+    
+    # Aplicando a tradução na geração de ticktext
+    ticktext_traduzido = [traduzir_dia_semana(data) + data.strftime(' %d') for data in media_diaria_glicose['Data']]
+    
+    # Atualizando o gráfico com os ticktext traduzidos
+    fig.update_layout(
+        xaxis=dict(
+            tickmode='array',
+            tickvals=media_diaria_glicose['Data'],
+            ticktext=ticktext_traduzido
+        ),
+        autosize=True
+    )
+
     # Criando o gráfico com Plotly
     fig = px.line(media_diaria_glicose, x='Data', y='Glicose', title='Médias Diárias de Glicose')
     fig.update_layout(
