@@ -86,7 +86,7 @@ if pagina == "Médias Diárias":
     porcentagem_acima_alvo = (len(acima_alvo) / len(dados_filtrados)) * 100
 
 # Calcular os maiores picos de glicose fora do bloco condicional da página, para estar acessível em ambas as páginas
-picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(5)
+picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(10)
 
 
 if pagina == "Médias Diárias":
