@@ -70,7 +70,7 @@ if pagina == "Médias Diárias":
     media_diaria_glicose = dados_filtrados.groupby('Data')['Glicose'].mean().reset_index()
     media_glicose_total = dados_filtrados['Glicose'].mean()
     a1c_estimado = (media_glicose_total + 46.7) / 28.7
-    picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(5)
+    picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(10)
     media_diaria_glargina = dados_filtrados.groupby('Data')['Dose Glargina'].mean().reset_index()
     soma_diaria_asparte = dados_filtrados.groupby('Data')['Dose Asparte'].sum().reset_index()
     media_diaria_asparte = dados_filtrados.groupby('Data')['Dose Asparte'].mean().reset_index()
