@@ -6,13 +6,13 @@ import plotly.express as px
 import datetime
 
 # Definindo a localização para português do Brasil
-#locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
 
 # Caminho para o arquivo Excel dentro da pasta 'app-medglic'
-caminho_arquivo = 'REGISTRO-GLICOSES.xlsx'
+caminho_arquivo = "C:/Users/maik/OneDrive - TECPRINTERS TECNOLOGIA DE IMPRESSAO LTDA/APP - MedGlic/REGISTRO-GLICOSES.xlsx"
 
 # Lendo os dados da planilha
-dados_glicemia = pd.read_excel('REGISTRO-GLICOSES.xlsx')
+dados_glicemia = pd.read_excel(caminho_arquivo)
 
 # Converter a coluna 'Dia/Mês/Ano' para o formato datetime, se necessário
 dados_glicemia['Data'] = pd.to_datetime(dados_glicemia['Dia/Mês/Ano'], format='%d/%m/%Y')
@@ -52,11 +52,6 @@ horario_inicio, horario_fim = st.sidebar.slider(
     format="HH:mm"
 )
 
-
-st.sidebar.subheader('Versão 1.0 - Em desenvolvimento.')
-
-
-
 # Aplicando o filtro de horários no DataFrame filtrado
 # Esta é a parte onde o filtro é aplicado corretamente
 dados_filtrados = dados_filtrados[
@@ -70,27 +65,25 @@ if pagina == "Médias Diárias":
     media_diaria_glicose = dados_filtrados.groupby('Data')['Glicose'].mean().reset_index()
     media_glicose_total = dados_filtrados['Glicose'].mean()
     a1c_estimado = (media_glicose_total + 46.7) / 28.7
-    picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(10)
+    picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(5)
     media_diaria_glargina = dados_filtrados.groupby('Data')['Dose Glargina'].mean().reset_index()
-    soma_diaria_asparte = dados_filtrados.groupby('Data')['Dose Asparte'].sum().reset_index()
     media_diaria_asparte = dados_filtrados.groupby('Data')['Dose Asparte'].mean().reset_index()
     media_glargina = media_diaria_glargina['Dose Glargina'].mean()
     media_asparte = media_diaria_asparte['Dose Asparte'].mean()
-    media_total_diaria_asparte = soma_diaria_asparte['Dose Asparte'].mean()
     desvio_padrao_asparte = dados_filtrados['Dose Asparte'].std()
-    dentro_alvo = dados_filtrados[(dados_filtrados['Glicose'] >= 70) & (dados_filtrados['Glicose'] <= 140)]
-    abaixo_alvo = dados_filtrados[dados_filtrados['Glicose'] < 70]
+    dentro_alvo = dados_filtrados[(dados_filtrados['Glicose'] >= 90) & (dados_filtrados['Glicose'] <= 140)]
+    abaixo_alvo = dados_filtrados[dados_filtrados['Glicose'] < 90]
     acima_alvo = dados_filtrados[dados_filtrados['Glicose'] > 140]
     porcentagem_dentro_alvo = (len(dentro_alvo) / len(dados_filtrados)) * 100
     porcentagem_abaixo_alvo = (len(abaixo_alvo) / len(dados_filtrados)) * 100
     porcentagem_acima_alvo = (len(acima_alvo) / len(dados_filtrados)) * 100
 
 # Calcular os maiores picos de glicose fora do bloco condicional da página, para estar acessível em ambas as páginas
-picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(10)
+picos_glicose = dados_filtrados.sort_values(by='Glicose', ascending=False).head(5)
 
 
 if pagina == "Médias Diárias":
-    st.title('Dashboard de Monitoramento da Glicemia - Paciente: Maik Selau Dimer')
+    st.title('Dashboard de Monitoramento da Glicemia - Médias Diárias')
     # Exibir a estimativa de A1c
     st.subheader('Estimativa da Hemoglobina Glicada (A1c)')
     st.write(f'A estimativa de A1c é de {a1c_estimado:.2f}%.')
@@ -108,22 +101,19 @@ if pagina == "Médias Diárias":
             autosize=True
         )
 
-    
-
     # Renderizando o gráfico com Streamlit
     st.plotly_chart(fig, use_container_width=True)
     st.subheader('Métricas de Insulina e Controle Glicêmico')
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
     col1.metric("Média Diária Glargina", f"{media_glargina:.2f} unidades")
-    col2.metric("Média por aplicação Asparte", f"{media_asparte:.2f} unidades")
-    col3.metric("Média Total Diária de Asparte", f"{media_total_diaria_asparte:.2f} unidades")
-    col4.metric("Desvio Padrão Asparte", f"{desvio_padrao_asparte:.2f} unidades")
+    col2.metric("Média Diária Asparte", f"{media_asparte:.2f} unidades")
+    col3.metric("Desvio Padrão Asparte", f"{desvio_padrao_asparte:.2f} unidades")
 
     # Adicionando uma explicação sobre o desvio padrão
     st.caption("O desvio padrão das doses de insulina Asparte indica a variação das doses administradas dia após dia. Um valor de desvio padrão menor sugere que as doses são mais consistentes, enquanto um valor maior indica uma maior variação nas doses diárias.")
 
     # Cálculo das porcentagens de medições fora do alvo
-    abaixo_alvo = dados_glicemia[dados_glicemia['Glicose'] < 70]
+    abaixo_alvo = dados_glicemia[dados_glicemia['Glicose'] < 90]
     acima_alvo = dados_glicemia[dados_glicemia['Glicose'] > 140]
 
     porcentagem_abaixo_alvo = (len(abaixo_alvo) / len(dados_glicemia)) * 100
@@ -132,8 +122,8 @@ if pagina == "Médias Diárias":
     # Exibição das métricas no dashboard
     st.subheader('Controle Glicêmico')
     col1, col2, col3 = st.columns(3)
-    col1.metric("% Dentro do Alvo (70-140 mg/dL)", f"{porcentagem_dentro_alvo:.2f}%")
-    col2.metric("% Abaixo do Alvo (<70 mg/dL)", f"{porcentagem_abaixo_alvo:.2f}%")
+    col1.metric("% Dentro do Alvo (90-140 mg/dL)", f"{porcentagem_dentro_alvo:.2f}%")
+    col2.metric("% Abaixo do Alvo (<90 mg/dL)", f"{porcentagem_abaixo_alvo:.2f}%")
     col3.metric("% Acima do Alvo (>140 mg/dL)", f"{porcentagem_acima_alvo:.2f}%")
    
 
@@ -152,21 +142,8 @@ if pagina == "Médias Diárias":
     correlacao_asparte = dados_filtrados['Glicose'].corr(dados_filtrados['Dose Asparte'])
     st.write(f"Correlação entre Glicose e Dose Asparte: {correlacao_asparte:.2f}")
 
-    def traduzir_dia_semana(english_day_name):
-        dias = {
-            'Monday': 'Segunda-feira',
-            'Tuesday': 'Terça-feira',
-            'Wednesday': 'Quarta-feira',
-            'Thursday': 'Quinta-feira',
-            'Friday': 'Sexta-feira',
-            'Saturday': 'Sábado',
-            'Sunday': 'Domingo',
-        }
-        return dias.get(english_day_name, 'Dia inválido')
-
-    # Aplicando a função de tradução
-    dados_filtrados['Dia da Semana'] = dados_filtrados['Data'].dt.day_name().apply(traduzir_dia_semana)
-
+    # Influência dos Dias da Semana
+    dados_filtrados['Dia da Semana'] = dados_filtrados['Data'].dt.day_name(locale='Portuguese')
     fig_dias_semana = px.box(dados_filtrados, x='Dia da Semana', y='Glicose', title='Níveis de Glicose por Dia da Semana')
     st.plotly_chart(fig_dias_semana, use_container_width=True)
     with st.expander("Entenda a distribuição por dia da semana"):
@@ -271,3 +248,29 @@ else:
     # Exibir os maiores picos de glicose
     st.subheader('Maiores Picos de Glicose')
     st.write(picos_glicose[['Data', 'Glicose']])
+    
+# Agrupar os dados apenas por horário, calculando a média de glicose para cada horário
+dados_filtrados['Horario_Somente'] = pd.to_datetime(dados_filtrados['Horario'], format='%H:%M:%S').dt.time
+media_glicose_por_horario_geral = dados_filtrados.groupby('Horario_Somente')['Glicose'].mean().reset_index()
+
+# Criar o gráfico de médias de glicose por horário, sem diferenciar por data
+fig_media_por_horario_geral = px.line(media_glicose_por_horario_geral, 
+                                      x='Horario_Somente', 
+                                      y='Glicose', 
+                                      title='Média de Glicose por Horário (Média de Todos os Dias)',
+                                      labels={'Horario_Somente': 'Horário', 'Glicose': 'Média de Glicose (mg/dL)'})
+
+# Atualizar o layout do gráfico
+fig_media_por_horario_geral.update_layout(
+    xaxis_title='Horário',
+    yaxis_title='Média de Glicose (mg/dL)',
+    xaxis=dict(
+        tickformat="%H:%M"
+    )
+)
+
+# Exibir o gráfico no Streamlit
+st.subheader("Média de Glicose por Horário (Média de Todos os Dias)")
+st.plotly_chart(fig_media_por_horario_geral, use_container_width=True)
+
+
